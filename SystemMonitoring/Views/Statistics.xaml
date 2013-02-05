@@ -1,0 +1,178 @@
+﻿<phone:PhoneApplicationPage x:Class="SystemMonitoring.Views.Statistics"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:control="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                            xmlns:prim="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls"
+                            xmlns:primtoolkit="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:v="clr-namespace:SystemMonitoring.Views"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            Style="{StaticResource TransitionPageStyle}"
+                            SupportedOrientations="PortraitOrLandscape"
+                            Orientation="Portrait"
+                            mc:Ignorable="d"
+                            d:DesignHeight="768"
+                            d:DesignWidth="480"
+                            shell:SystemTray.IsVisible="True"
+                            xmlns:my="clr-namespace:SystemMonitoring"
+                            d:DataContext="{Binding Source={StaticResource ModelStatic}, Path=Current.Groups[0]}">
+    <phone:PhoneApplicationPage.Resources>
+        <my:OffsetToMarginConverter x:Key="OffsetToMarginConverter1" />
+        <my:RaitingToVisible x:Key="RaitingToVisible1" />
+        <DataTemplate x:Key="GroupListItemTemplate">
+            <StackPanel Orientation="Vertical">
+                <TextBlock FontSize="48"
+                           HorizontalAlignment="Left"
+                           Margin="0,0,-100,0"
+                           Text="{Binding FullName}"
+                           Width="300" />
+                <ItemsControl ItemsSource="{Binding _Students}"
+                              Name="listStudents"
+                              Unloaded="listStudents_Unloaded">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Height="50" Orientation="Horizontal"
+                                        Loaded="StackPanel_Loaded"
+                                        Tag="{Binding ID}">
+                                <TextBlock FontSize="24"
+                                           Margin="5,15,0,0"
+                                           Text="{Binding}"
+                                           VerticalAlignment="Top">
+                                </TextBlock>
+                                <TextBlock FontSize="24"
+                                           Margin="5,15,0,0"
+                                           Text=" !"
+                                           Visibility="{Binding Path=_IsRaitingVisibility, FallbackValue=Collapsed}"
+                                           Foreground="{StaticResource PhoneAccentBrush}"
+                                           VerticalAlignment="Top">
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="PassingItemTemplate">
+            <ItemsControl Loaded="ItemsControl_Loaded">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton BorderThickness="0,1,1,1"
+                                      Height="75"
+                                      Loaded="TextBlock_Loaded"
+                                      Margin="-25,-5,0,-20"
+                                      Padding="0,5,0,0"
+                                      Tap="TextBlock_Tap_1"
+                                      VerticalContentAlignment="Top"
+                                      Width="225">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Laba._ToString}" />
+                                <TextBlock Visibility="{Binding Path=Laba.Raiting, Converter={StaticResource RaitingToVisible1}}"
+                                           Text="  " />
+                                <TextBlock Text="{Binding Laba.Raiting}"
+                                           Visibility="{Binding Path=Laba.Raiting, Converter={StaticResource RaitingToVisible1}}"
+                                           Foreground="{StaticResource PhoneAccentBrush}" />
+                                <TextBlock Text="!"
+                                           Foreground="{StaticResource PhoneAccentBrush}"
+                                           Visibility="{Binding Path=Laba.Raiting, FallbackValue='Collapsed', TargetNullValue='Collapsed', Converter={StaticResource RaitingToVisible1}}" />
+                            </StackPanel>
+                        </ToggleButton>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+        <DataTemplate x:Key="PassingListItemTemplate">
+            <StackPanel Orientation="Vertical">
+                <TextBlock FontSize="48"
+                           Opacity="0"
+                           Text="{Binding FullName}" />
+                <ItemsControl ItemsSource="{Binding _Students}"
+                              Name="listPassing"
+                              Unloaded="listPassing_Unloaded"
+                              ItemTemplate="{StaticResource PassingItemTemplate}"></ItemsControl>
+            </StackPanel>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
+    <Grid  Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ItemsControl  Name="listTypeWork"
+                       ItemsSource="{Binding Path=ModelStaticCurrent.Works, Source={StaticResource ModelStatic}}"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       Margin="{Binding ElementName=listPassingScrollViewer, Path=HorizontalOffset, Converter={StaticResource OffsetToMarginConverter1}}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Width="200"
+                               Foreground="{StaticResource PhoneAccentBrush}"
+                               Text="{Binding Theme}"
+                               FontSize="24" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <ScrollViewer Name="Scroll"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="2"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Grid.Row="1">
+            <Grid Name="ScrollGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ItemsControl  Name="listGroup"
+                               Canvas.ZIndex="200"
+                               Background="{StaticResource PhoneBackgroundBrush}"
+                               ItemsSource="{Binding }"
+                               ItemTemplate="{StaticResource GroupListItemTemplate}"></ItemsControl>
+                <ScrollViewer  ScrollViewer.ManipulationMode="Control"
+                               Background="{StaticResource PhoneBackgroundBrush}"
+                               HorizontalScrollBarVisibility="Auto"
+                               Name="listPassingScrollViewer"
+                               VerticalScrollBarVisibility="Disabled"
+                               Grid.Column="1">
+                    <ItemsControl  Name="listGroups"
+                                   ItemsSource="{Binding }"
+                                   ItemTemplate="{StaticResource PassingListItemTemplate}"></ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </ScrollViewer>
+        <TextBlock Name="EmptyText" Visibility="Collapsed" HorizontalAlignment="Center" FontSize="32" Text="Нет данных" Grid.Row="1" Grid.ColumnSpan="2" />
+        <Rectangle   Fill="{StaticResource PhoneBackgroundBrush}" />
+    </Grid>
+
+
+    <!--Пример кода, иллюстрирующий использование ApplicationBar-->
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Кнопка 1"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Кнопка 2"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Элемент меню 1"/>
+                <shell:ApplicationBarMenuItem Text="Элемент меню 2"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
+
+</phone:PhoneApplicationPage>

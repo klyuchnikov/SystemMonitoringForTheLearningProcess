@@ -1,0 +1,48 @@
+﻿<phone:PhoneApplicationPage x:Class="SystemMonitoring.Views.Lecture"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            SupportedOrientations="Portrait"
+                            Orientation="Portrait"
+                            mc:Ignorable="d"
+                            d:DesignHeight="768"
+                            d:DesignWidth="480"
+                            shell:SystemTray.IsVisible="True"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
+
+    <!--LayoutRoot представляет корневую сетку, где размещается все содержимое страницы-->
+    <ScrollViewer x:Name="LayoutRoot"
+                  Background="Transparent"
+                  Foreground="{StaticResource PhoneAccentBrush}">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Margin="12,0,0,0"
+                       FontSize="36"
+                       Text="Лекция" />
+            <toolkit:PhoneTextBox Name="Theme"
+                                  FontSize="36"
+                                  Text="{Binding Theme}" />
+            <toolkit:DatePicker Name="Date"
+                                Value="{Binding Date, Mode=TwoWay}" />
+        </StackPanel>
+
+    </ScrollViewer>
+
+    <!--Пример кода, иллюстрирующий использование ApplicationBar-->
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Кнопка 1"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Кнопка 2"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Элемент меню 1"/>
+                <shell:ApplicationBarMenuItem Text="Элемент меню 2"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
+
+</phone:PhoneApplicationPage>

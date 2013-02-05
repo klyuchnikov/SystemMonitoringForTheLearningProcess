@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="SystemMonitoring.Views.PassingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+             mc:Ignorable="d"
+             toolkit:TiltEffect.IsTiltEnabled="True"
+             FontFamily="{StaticResource PhoneFontFamilyNormal}"
+             FontSize="{StaticResource PhoneFontSizeNormal}"
+             Foreground="{StaticResource PhoneForegroundBrush}"
+             d:DesignHeight="540"
+             d:DesignWidth="480">
+    <Border BorderThickness="0,2,0,2"
+            BorderBrush="{StaticResource PhoneForegroundBrush}">
+        <StackPanel x:Name="LayoutRoot"
+                    Background="{StaticResource PhoneBackgroundBrush}"
+                    Unloaded="Grid_Unloaded"
+                    Orientation="Vertical">
+            <TextBlock Height="30"
+                       Foreground="{StaticResource PhoneAccentBrush}"
+                       FontSize="24"
+                       Margin="12,0,0,0"
+                       Text="{Binding Work.Theme}" />
+            <toolkit:ToggleSwitch Foreground="{StaticResource PhoneSubtleBrush}"
+                                  Canvas.ZIndex="-2100000000"
+                                  Checked="IsPassed_Checked"
+                                  Content="Сдана ли работа?"
+                                  Name="IsPassed"
+                                  Margin="0,-30,0,-30"
+                                  IsChecked="{Binding Laba.IsPassed, Mode=TwoWay}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="219" />
+                    <ColumnDefinition Width="261*" />
+                </Grid.ColumnDefinitions>
+                <toolkit:DatePicker Grid.Column="1"
+                                    Margin="0,0,0,0"
+                                    Name="DateBegin"
+                                    Value="{Binding Laba.DateBegin, Mode=TwoWay}" />
+
+                <TextBlock Margin="12,20,0,0"
+                           Foreground="{StaticResource PhoneSubtleBrush}"
+                           Text="Дата начала сдачи" />
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="219" />
+                    <ColumnDefinition Width="261*" />
+                </Grid.ColumnDefinitions>
+                <toolkit:DatePicker Grid.Column="1"
+                                    Margin="0,0,0,0"
+                                    Name="DateEnd"
+                                    Value="{Binding Laba.DateEnd, Mode=TwoWay}" />
+                <TextBlock Margin="12,20,0,0"
+                           Foreground="{StaticResource PhoneSubtleBrush}"
+                           Text="Дата окончания сдачи" />
+            </Grid>
+            <TextBlock Text="Прогресс"
+                       Margin="12,0,0,0"
+                       Foreground="{StaticResource PhoneSubtleBrush}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <Slider Value="{Binding Laba.Progress, Mode=TwoWay}"
+                        ValueChanged="Progress_ValueChanged"
+                        Name="Progress"
+                        Minimum="0"
+                        Maximum="100"
+                        Margin="0,0,0,-30"
+                        SmallChange="1" />
+                <TextBlock Grid.Column="1"
+                           FontSize="26"
+                           Text="{Binding Laba.Progress}" />
+            </Grid>
+            <TextBlock Text="Оценка"
+                       Margin="12,0,0,0"
+                       Foreground="{StaticResource PhoneSubtleBrush}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <Slider  Value="{Binding Laba.Grade, Mode=TwoWay}"
+                         ValueChanged="grade_ValueChanged"
+                         Name="grade"
+                         Minimum="0"
+                         Maximum="5"
+                         Margin="0,0,0,-30"
+                         SmallChange="1" />
+                <TextBlock Grid.Column="1"
+                           FontSize="26"
+                           Text="{Binding Laba.Grade}" />
+            </Grid>
+            <TextBlock Text="Рейтинг уникальности"
+                       Margin="12,0,0,0"
+                       Foreground="{StaticResource PhoneSubtleBrush}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <Slider  Value="{Binding Laba.Raiting, Mode=TwoWay}"
+                         ValueChanged="Raiting_ValueChanged"
+                         Name="Raiting"
+                         Minimum="0"
+                         Maximum="5"
+                         Margin="0,0,0,-30"
+                         SmallChange="1" />
+                <TextBlock Grid.Column="1"
+                           
+                           Text="{Binding Laba.Raiting}"
+                           FontSize="26" />
+            </Grid>
+            <toolkit:PhoneTextBox Hint="Комментарий"
+                                  Text="{Binding Laba.Comment, Mode=TwoWay}" />
+        </StackPanel>
+    </Border>
+</UserControl>

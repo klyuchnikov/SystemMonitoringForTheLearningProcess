@@ -1,0 +1,76 @@
+﻿<phone:PhoneApplicationPage x:Class="SystemMonitoring.Views.StudentView"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            toolkit:TiltEffect.IsTiltEnabled="True"
+                            SupportedOrientations="PortraitOrLandscape"
+                            Orientation="Portrait"
+                            mc:Ignorable="d"
+                            d:DataContext="{Binding Source={StaticResource ModelStatic}, Path=Current.Students[0]}"
+                            d:DesignHeight="768"
+                            d:DesignWidth="480"
+                            shell:SystemTray.IsVisible="True"
+                            xmlns:my="clr-namespace:SystemMonitoring">
+    <phone:PhoneApplicationPage.Resources>
+        <ControlTemplate x:Key="TextTemplate"
+                         TargetType="toolkit:PhoneTextBox">
+            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, FallbackValue='              '}"
+                       Margin="20,20,0,20"
+                       Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}"
+                       Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}"
+                       Foreground="{StaticResource PhoneForegroundBrush}" />
+        </ControlTemplate>
+    </phone:PhoneApplicationPage.Resources>
+    <!--LayoutRoot представляет корневую сетку, где размещается все содержимое страницы-->
+    <ScrollViewer x:Name="LayoutRoot"
+                  VerticalScrollBarVisibility="Auto"
+                  Background="Transparent">
+        <StackPanel Orientation="Vertical"
+                    Name="SP"
+                    Loaded="SP_Loaded">
+            <toolkit:PhoneTextBox Name="Surname"
+                                  Text="{Binding SurName, Mode=TwoWay}"
+                                  Hint="Фамилия"
+                                  FontSize="{StaticResource PhoneFontSizeExtraLarge}">
+            </toolkit:PhoneTextBox>
+            <toolkit:PhoneTextBox Text="{Binding Name, Mode=TwoWay}"
+                                  Hint="Имя"
+                                  FontSize="{StaticResource PhoneFontSizeExtraLarge}" />
+            <toolkit:PhoneTextBox Text="{Binding Patronymic, Mode=TwoWay}"
+                                  Hint="Отчество"
+                                  FontSize="{StaticResource PhoneFontSizeExtraLarge}" />
+            <CheckBox Content="Староста?"
+                      IsChecked="{Binding IsStarosta, Mode=TwoWay}"
+                      FontSize="{StaticResource PhoneFontSizeExtraLarge}" />
+            <toolkit:PhoneTextBox Text="{Binding Phone, Mode=TwoWay}"
+                                  Hint="Телефон"
+                                  FontSize="{StaticResource PhoneFontSizeExtraLarge}" />
+            <toolkit:PhoneTextBox Text="{Binding Email, Mode=TwoWay}"
+                                  Hint="Email"
+                                  FontSize="{StaticResource PhoneFontSizeExtraLarge}" />
+            <toolkit:PhoneTextBox Text="{Binding CommentForStudent, Mode=TwoWay}"
+                                  Hint="Комментарий"
+                                  FontSize="{StaticResource PhoneFontSizeExtraLarge}" />
+        </StackPanel>
+    </ScrollViewer>
+
+    <!--Пример кода, иллюстрирующий использование ApplicationBar-->
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Кнопка 1"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Кнопка 2"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Элемент меню 1"/>
+                <shell:ApplicationBarMenuItem Text="Элемент меню 2"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
+
+</phone:PhoneApplicationPage>

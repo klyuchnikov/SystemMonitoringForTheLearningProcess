@@ -1,0 +1,131 @@
+﻿<phone:PhoneApplicationPage xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            x:Class="SystemMonitoring.Views.Disciplines"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            SupportedOrientations="PortraitOrLandscape"
+                            Orientation="Portrait"
+                            Style="{StaticResource TransitionPageStyle}"
+                            mc:Ignorable="d"
+                            DataContext="{Binding Source={StaticResource ModelStatic}, Path=Current}"
+                            d:DesignHeight="696"
+                            d:DesignWidth="480"
+                            shell:SystemTray.IsVisible="True"
+                            xmlns:my="clr-namespace:SystemMonitoring">
+    <phone:PhoneApplicationPage.Resources>
+        <my:LectureToVisible x:Key="LectureToVisible1" />
+        <my:BooleanToVisible x:Key="BooleanToVisible1" />
+    </phone:PhoneApplicationPage.Resources>
+    <!--LayoutRoot представляет корневую сетку, где размещается все содержимое страницы-->
+    <Grid x:Name="LayoutRoot"
+          DataContext="{Binding CurrentTeacher}"
+          Background="Transparent">
+        <controls:Pivot Name="PanoramaDisc"
+                        ItemsSource="{Binding _DisciplinesTeachers}">
+            <controls:Pivot.TitleTemplate>
+                <DataTemplate>
+                    <TextBlock Text="дисциплины"
+                               FontStretch="SemiExpanded"
+                               Margin="0,-30,0,0"
+                               FontSize="72"
+                               Foreground="{StaticResource PhoneAccentBrush}" />
+                </DataTemplate>
+            </controls:Pivot.TitleTemplate>
+            <controls:Pivot.ItemTemplate>
+                <DataTemplate>
+                    <ScrollViewer>
+                        <ItemsControl ItemsSource="{Binding _DisciplinesTeachersTypeWorks}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Тип: "
+                                                       FontSize="32"
+                                                       Foreground="{StaticResource PhoneBorderBrush}" />
+                                            <TextBlock Text="{Binding _TypeWork}"
+                                                       FontSize="32"
+                                                       Foreground="{StaticResource PhoneAccentBrush}" />
+                                            <TextBlock Text="  " />
+                                            <StackPanel Visibility="{Binding Path=_TypeWork.Name, Converter={StaticResource LectureToVisible1}}"
+                                                        Orientation="Horizontal">
+                                                <Image Height="48"
+                                                       Width="48"
+                                                       Margin="0,-10,0,0"
+                                                       Source="../icons/appbar.add.rest.png" />
+                                                <Button Width="72"
+                                                        Margin="-60,-10,0,0"
+                                                        Height="72"
+                                                        Click="NewLection_Click"
+                                                        Style="{StaticResource RoundButton}">
+                                                    <Image Height="48"
+                                                           Width="48"
+                                                           Source="../icons/appbar.add.rest.png" />
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <ItemsControl ItemsSource="{Binding _Works}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Vertical">
+                                                        <CheckBox Name="CheckBoxEx"
+                                                                  Checked="CheckBoxEx_Checked">
+                                                            <CheckBox.Template>
+                                                                <ControlTemplate>
+                                                                    <TextBlock  FontSize="36"
+                                                                                Text="{Binding _ToString}" />
+                                                                </ControlTemplate>
+                                                            </CheckBox.Template>
+                                                        </CheckBox>
+                                                        <StackPanel Orientation="Vertical"
+                                                                    Visibility="{Binding ElementName=CheckBoxEx, Path=IsChecked, Converter={StaticResource BooleanToVisible1}}">
+                                                            <toolkit:PhoneTextBox Name="Theme"
+                                                                                  FontSize="26"
+                                                                                  Hint="Тема"
+                                                                                  Text="{Binding Theme, Mode=TwoWay}" />
+                                                            <toolkit:DatePicker Name="Date"
+                                                                                Visibility="{Binding Path=_DisciplinesTeachersTypeWork._TypeWork.Name, Converter={StaticResource LectureToVisible1}}"
+                                                                                Value="{Binding Date, Mode=TwoWay}" />
+                                                            <toolkit:PhoneTextBox Name="Link"
+                                                                                  Hint="Ссылка"
+                                                                                  Text="{Binding Link, Mode=TwoWay}" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DataTemplate>
+            </controls:Pivot.ItemTemplate>
+        </controls:Pivot>
+    </Grid>
+    <!--Пример кода, иллюстрирующий использование ApplicationBar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True"
+                              IsMenuEnabled="False"
+                              BackgroundColor="{StaticResource PhoneBackgroundColor}">
+            <shell:ApplicationBarIconButton  IconUri="/icons/appbar.paper.png"
+                                             Text="Статистика"
+                                             Click="Navigate_Statistics" />
+            <shell:ApplicationBarIconButton  IconUri="/icons/appbar.journal.png"
+                                             Text="Сдача лаб"
+                                             Click="Navigate_Statistics2" />
+            <shell:ApplicationBarIconButton  IconUri="/icons/appbar.people.multiple.png"
+                                             Text="Студенты"
+                                             Click="Navigate_Students" />
+            <shell:ApplicationBarIconButton  IconUri="/icons/appbar.sync.rest.png"
+                                             Text="Обновить"
+                                             Click="Navigate_Update" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>
