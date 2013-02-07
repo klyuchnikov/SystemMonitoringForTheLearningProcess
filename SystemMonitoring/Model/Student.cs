@@ -12,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SystemMonitoring.Views;
 
 namespace SystemMonitoring.Model
 {
@@ -206,6 +207,24 @@ namespace SystemMonitoring.Model
             {
                 get { return _IsRaiting ? Visibility.Visible : Visibility.Collapsed; }
                 set { NotifyPropertyChanged("_IsRaitingVisibility"); }
+            }
+
+            [JsonIgnore]
+            public PassingViewItem[] _PassingViewItems
+            {
+                get
+                {
+                    var passingWorks = this._CurrentHistoryStudent._PassingWorks;
+                    var items = ModelStatic.ModelStaticCurrent.Works.Select(
+                        q => new PassingViewItem
+                        {
+                            Laba = passingWorks.SingleOrDefault(a => a.WorkID == q.ID) == null ? null : passingWorks.Single(a => a.WorkID == q.ID),
+                            StudentID = this.ID,
+                            Work = q,
+                            HistoryStudentID = this._CurrentHistoryStudent.ID
+                        }).ToArray();
+                    return items;
+                }
             }
 
             public override string ToString()
