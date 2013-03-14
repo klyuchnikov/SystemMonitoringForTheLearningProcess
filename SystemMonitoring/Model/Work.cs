@@ -82,6 +82,8 @@ namespace SystemMonitoring.Model
                 }
             }
 
+            private Guid NewID;
+
             #endregion
 
             #region Link
@@ -116,6 +118,15 @@ namespace SystemMonitoring.Model
                 this.link = jObject.Value<string>("Link");
                 this.theme = jObject.Value<string>("Theme");
                 this.date = jObject.Value<DateTime>("Date");
+            }
+
+            public Work(int DisciplinesTeachersTypeWorksID, string theme, string link, DateTime dateTime)
+            {
+                this.disciplinesTeachersTypeWorkID = DisciplinesTeachersTypeWorksID;
+                this.theme = theme;
+                this.link = link;
+                this.date = dateTime;
+                this.NewID = new Guid();
             }
 
             private void Update(Work work)
@@ -158,6 +169,13 @@ namespace SystemMonitoring.Model
                 var works = jArray.OfType<JObject>().ToArray().Select(q => new Work(q));
                 Current.works.Clear();
                 Current.works.AddRange(works);
+                Current.Works = null;
+            }
+
+            public static void AllLection(int DisciplinesTeachersTypeWorksID, string theme, string link, DateTime dateTime)
+            {
+                var work = new Work(DisciplinesTeachersTypeWorksID, theme, link, dateTime);
+                Current.works.Add(work);
                 Current.Works = null;
             }
 
@@ -205,6 +223,7 @@ namespace SystemMonitoring.Model
             {
                 return other.ID == this.ID;
             }
+
         }
     }
 }

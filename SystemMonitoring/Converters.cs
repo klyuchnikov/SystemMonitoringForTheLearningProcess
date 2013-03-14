@@ -93,4 +93,20 @@ namespace SystemMonitoring
             throw new NotImplementedException();
         }
     }
+
+    public class NullebleToVisible : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value == null
+                       ? Visibility.Visible
+                       : value as Array == null ? Visibility.Visible
+                       : (value as Array).Length == 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

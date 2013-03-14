@@ -159,6 +159,12 @@ namespace SystemMonitoring.Model
                 get { return Current.passingWorks.Where(a => a.HistoryStudentID == this.id).ToArray(); }
             }
 
+            [JsonIgnore]
+            public AttendingLectures[] _AttendingLectureses
+            {
+                get { return Current.attendingsLectures.Where(a => a.HistoryStudentID == this.id).ToArray(); }
+            }
+
 
             [JsonIgnore]
             public Student _Student

@@ -246,6 +246,17 @@ namespace SystemMonitoring.Model
             }
         }
 
+        private Model.Group[] groups;
+        public Model.Group[] Groups
+        {
+            get { return groups; }
+            set
+            {
+                groups = value;
+                NotifyPropertyChanged("groups");
+            }
+        }
+
         public static int Parametr { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;

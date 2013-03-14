@@ -227,6 +227,35 @@ namespace SystemMonitoring.Model
                 }
             }
 
+            [JsonIgnore]
+            public PresenceViewItem[] _PresenceViewItems
+            {
+                get
+                {
+                    var attendingLectureses = this._CurrentHistoryStudent._AttendingLectureses;
+                    var items = ModelStatic.ModelStaticCurrent.Works.Select(
+                        q => new PresenceViewItem
+                        {
+                            AttendingLectures = GetAttendingLectures(q.ID),
+                            StudentID = this.ID,
+                            Work = q,
+                            HistoryStudentID = this._CurrentHistoryStudent.ID
+                        }).ToArray();
+                    return items;
+                }
+            }
+
+            private AttendingLectures GetAttendingLectures(int WorkID)
+            {
+                var att = this._CurrentHistoryStudent._AttendingLectureses.SingleOrDefault(a => a.WorkID == WorkID);
+                if (att == null)
+                {
+                    AttendingLectures.AddAttendingLectures(WorkID, this._CurrentHistoryStudent.ID);
+                    att = this._CurrentHistoryStudent._AttendingLectureses.SingleOrDefault(a => a.WorkID == WorkID);
+                }
+                return att;
+            }
+
             public override string ToString()
             {
                 if (!string.IsNullOrEmpty(this.patronymic))

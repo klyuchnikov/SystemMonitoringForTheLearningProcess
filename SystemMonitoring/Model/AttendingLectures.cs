@@ -36,7 +36,7 @@ namespace SystemMonitoring.Model
             public string ThemeReport
             {
                 get { return themeReport; }
-                private set
+                set
                 {
                     themeReport = value;
                     NotifyPropertyChanged("ThemeReport");
@@ -62,7 +62,7 @@ namespace SystemMonitoring.Model
             public bool IsWas
             {
                 get { return isWas; }
-                private set
+                set
                 {
                     isWas = value;
                     NotifyPropertyChanged("IsWas");
@@ -75,7 +75,7 @@ namespace SystemMonitoring.Model
             public int Grade
             {
                 get { return grade; }
-                private set
+                set
                 {
                     grade = value;
                     NotifyPropertyChanged("Grade");
@@ -98,6 +98,12 @@ namespace SystemMonitoring.Model
                 this.themeReport = jObject.Value<string>("ThemeReport");
                 this.grade = jObject.Value<int>("Grade");
                 this.isWas = jObject.Value<bool>("IsWas");
+            }
+
+            public AttendingLectures(int WorkID, int HistoryStudentID)
+            {
+                this.workID = WorkID;
+                this.historyStudentID = HistoryStudentID;
             }
 
             public static void AddAttendingLectures(JObject jObject)
@@ -162,6 +168,13 @@ namespace SystemMonitoring.Model
             public bool Equals(AttendingLectures other)
             {
                 return other.HistoryStudentID == this.HistoryStudentID && other.WorkID == this.WorkID;
+            }
+
+            internal static void AddAttendingLectures(int WorkID, int HistoryStudentID)
+            {
+                var attendingLectures = new AttendingLectures(WorkID, HistoryStudentID);
+                Current.attendingsLectures.Add(attendingLectures);
+                Current.AttendingsLectures = null;
             }
         }
 

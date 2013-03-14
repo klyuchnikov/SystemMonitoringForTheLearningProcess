@@ -11,7 +11,7 @@
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
                             mc:Ignorable="d"
-                            d:DesignHeight="768"
+                            d:DesignHeight="696"
                             d:DesignWidth="480"
                             shell:SystemTray.IsVisible="True"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
@@ -23,26 +23,35 @@
         <StackPanel Orientation="Vertical">
             <TextBlock Margin="12,0,0,0"
                        FontSize="36"
+                       Text="Новая лекция" />
+            <TextBlock Margin="12,0,0,0" Name="discName"
+                       FontSize="36"
                        Text="Лекция" />
             <toolkit:PhoneTextBox Name="Theme"
+                                  Hint="Тема"
                                   FontSize="36"
                                   Text="{Binding Theme}" />
             <toolkit:DatePicker Name="Date"
+                                FontSize="36"
                                 Value="{Binding Date, Mode=TwoWay}" />
+            <toolkit:PhoneTextBox Name="Link"
+                                  Hint="Ссылка"
+                                  FontSize="36"
+                                  Text="{Binding Link, Mode=TwoWay}" />
         </StackPanel>
 
     </ScrollViewer>
 
     <!--Пример кода, иллюстрирующий использование ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Кнопка 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Кнопка 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="Элемент меню 1"/>
-                <shell:ApplicationBarMenuItem Text="Элемент меню 2"/>
-            </shell:ApplicationBar.MenuItems>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True"
+                              IsMenuEnabled="False">
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.add.rest.png"
+                                            Click="ApplicationBarIconButton_Click"
+                                            Text="Создать" />
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.cancel.rest.png"
+                                            Text="Отмена" />
         </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
+    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

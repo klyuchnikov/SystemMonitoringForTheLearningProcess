@@ -48,6 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Coding4Fun.Toolkit.Controls">
+      <HintPath>..\..\Coding4Fun.Toolkit (Windows Phone 7)\Coding4Fun.Toolkit.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
@@ -85,6 +88,12 @@
     <Compile Include="Converters.cs" />
     <Compile Include="Views\Lecture.xaml.cs">
       <DependentUpon>Lecture.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LecturesView.xaml.cs">
+      <DependentUpon>LecturesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PassingGrid.xaml.cs">
+      <DependentUpon>PassingGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PassingView.xaml.cs">
       <DependentUpon>PassingView.xaml</DependentUpon>
@@ -126,6 +135,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\LecturesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PassingGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PassingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -163,10 +180,6 @@
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
-    <None Include="SystemMonitoring_2013_02_05_23_45_01.sap" />
-    <None Include="SystemMonitoring_2013_02_05_23_49_46.sap" />
-    <None Include="SystemMonitoring_2013_02_05_23_55_58.sap" />
-    <None Include="SystemMonitoring_2013_02_05_23_58_04.sap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">

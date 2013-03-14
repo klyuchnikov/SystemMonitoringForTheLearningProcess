@@ -34,19 +34,6 @@ namespace SystemMonitoring.Views
             //   PassingView.Margin = new Thickness(0, 200, 0, 0);
             PassingView.Height = 0;
         }
-        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            var disciplineID = int.Parse(e.Uri.ToString().Substring(e.Uri.ToString().IndexOf('?')).Split('=')[1]);
-            var group = Model.Model.Current.DisciplinesGroupses.Where(q => q.DisciplineID == disciplineID).Select(a => a._Group).ToArray();
-            LayoutRoot.DataContext = group;
-            var works =
-                Model.Model.Current.DisciplinesTeachersTypeWorks.Where(
-                    q => q._DisciplinesTeachers._Discipline.ID == disciplineID).SelectMany(q => q._Works).ToArray();
-            Model.ModelStatic.ModelStaticCurrent.Works = works;
-            if (works.Length == 0)
-                EmptyText.Visibility = Visibility.Visible;
-        }
 
         private void TextBlock_Tap_1(object sender, GestureEventArgs e)
         {
@@ -110,21 +97,6 @@ namespace SystemMonitoring.Views
             var item = ((sender as FrameworkElement).DataContext as PassingViewItem);
             if (item.StudentID == (int)LastSelect.Tag && item.Work.ID == workIDCurrent)
                 (sender as FrameworkElement).Height = popupHeight;
-        }
-
-        private void ItemsControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            var st = (sender as FrameworkElement).DataContext as Model.Model.Student;
-            var passingWorks = st._CurrentHistoryStudent._PassingWorks;
-            var items = Model.ModelStatic.ModelStaticCurrent.Works.Select(
-                q => new PassingViewItem
-                {
-                    Laba = passingWorks.SingleOrDefault(a => a.WorkID == q.ID) == null ? null : passingWorks.Single(a => a.WorkID == q.ID),
-                    StudentID = st.ID,
-                    Work = q,
-                    HistoryStudentID = st._CurrentHistoryStudent.ID
-                }).ToArray();
-            (sender as ItemsControl).ItemsSource = items;
         }
 
         private void StackPanel_Loaded(object sender, RoutedEventArgs e)
